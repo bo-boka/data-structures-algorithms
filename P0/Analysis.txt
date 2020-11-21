@@ -1,0 +1,41 @@
+Runtime Analysis:
+================
+
+Task0
+-Worst case complexity is O(1).
+-Algorithm:
+    -print result to console: O(1)
+
+Task1
+-Worst case complexity is O(n).
+-Algorithm:
+    -Initialize empty set: O(1)
+    -Iterate through calls and texts to update set: O(n)
+    -print result to console: O(1)
+
+Task2
+-Worst case complexity is O(n).
+-Algorithm:
+    -Initialize empty dict: O(1)
+    -Iterate through calls to update set: O(n)
+    -max() function: O(n)
+    -print result to console: O(1)
+
+Task3
+-Worst case complexity: O(n log n)
+-Algorithm:
+    -Declare values & initialize set: O(1)
+    -Iterate through calls to update set: O(n)
+    -str.join() function: O(n)
+    -sorted() function: O(n log n)
+    -print result to console: O(1)
+
+Task4
+-Worst case complexity: O(n log n)
+-Algorithm:
+    -Initialize empty set: O(1)
+    -Iterate through calls and texts to update set: O(n)
+    -str.join() function: O(n)
+    -sorted() function: O(n log n)
+    -print result to console: O(1)
+
