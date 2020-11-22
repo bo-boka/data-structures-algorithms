@@ -1,4 +1,6 @@
-#=========SINGLEY LINKED LISTS===========
+
+# =========SINGLEY LINKED LISTS===========
+
 
 class Node:
     def __init__(self, value):
@@ -48,7 +50,8 @@ class LinkedList:
                 out_list.append((str_list))
             else:
                 out_list.append(node.value)
-            #out_list.append(int(str(node.value)))  # <-- node.value is actually of type Node, therefore convert it into int before appending to the Python list
+            # out_list.append(int(str(node.value)))  # <-- node.value is actually of type Node,
+            # therefore convert it into int before appending to the Python list
             node = node.next
         return out_list
 
@@ -118,7 +121,7 @@ class LinkedList:
         return count
 
 
-#defining a function outside class & adding it
+# defining a function outside class & adding it
 
 # LinkedList.prepend() has O(1) complexity
 def prepend(self, value):
@@ -130,7 +133,9 @@ def prepend(self, value):
     node = Node(value)
     node.next = self.head
     self.head = node
-#this adds the function to the class
+
+
+# this adds the function to the class
 LinkedList.prepend = prepend
 
 
@@ -145,6 +150,7 @@ def create_linked_list(arr):
         tail = tail.next
     return head
 
+
 def print_linked_list(head):
     while head:
         print(head.data, end=' ')
@@ -152,13 +158,14 @@ def print_linked_list(head):
     print()
 
 
-#=========DOUBLY LINKED LISTS===========
+# =========DOUBLY LINKED LISTS===========
 
 class DoubleNode:
     def __init__(self, value):
         self.value = value
         self.next = None
         self.previous = None
+
 
 class DoublyLinkedList:
     def __init__(self):
@@ -178,9 +185,9 @@ class DoublyLinkedList:
         return
 
 
-#=========CIRCULARLY LINKED LISTS===========
+# =========CIRCULARLY LINKED LISTS===========
 
-#(after creating ll class and node class)
+# (after creating ll class and node class)
 list_with_loop = LinkedList(Node(2))
 list_with_loop.append(-1)
 list_with_loop.append(3)
@@ -193,6 +200,7 @@ node = list_with_loop.head
 while node.next:
     node = node.next
 node.next = loop_start
+
 
 def iscircular(linked_list):
     """
@@ -214,11 +222,12 @@ def iscircular(linked_list):
             return True
         node = node.next
         fast = fast.next.next
-        if node.value == -4:
+        if node.value == -4:  # not sure why these two lines are here
             return
     return False
 
-#========= Algos ==========
+# ========= Algos ==========
+
 
 def reverse(linked_list):
     """
@@ -233,7 +242,7 @@ def reverse(linked_list):
     new_ll = LinkedList()
     prev_node = None
 
-    #each new node points to the previous and the last one is made the head
+    # each new node points to the previous and the last one is made the head
     for i in linked_list:
         new_node = Node(i)
         new_node.next = prev_node
@@ -269,7 +278,7 @@ def merge(list1, list2):
         node2 = node2.next
     new_node = new_ll.head
     while node1:
-        if node2 is None: #add the rest of node1s to new_ll
+        if node2 is None:  # add the rest of node1s to new_ll
             new_node.next = node1
             return new_ll
         if node1.value < node2.value:
@@ -281,7 +290,7 @@ def merge(list1, list2):
             new_node = new_node.next
             node2 = node2.next
         print('current new_ll: {}'.format(new_ll.to_list()))
-    if node2: #add the rest of node2s to new_ll
+    if node2:  # add the rest of node2s to new_ll
         print('add rest of list2 to {}'.format(new_ll.to_list()))
         new_node.next = node2
     return new_ll
@@ -289,10 +298,10 @@ def merge(list1, list2):
 
 class NestedLinkedList(LinkedList):
     def flatten(self):
-        '''
+        """
         Args: nested linked list
         Returns: linked list in ascending sorted order.
-        '''
+        """
 
         if self.head is None:
             return
@@ -314,8 +323,9 @@ class NestedLinkedList(LinkedList):
         if node.next is None:
             return merge(node.value, None)  # <-- First argument is a simple LinkedList
 
-        # _flatten() is calling itself untill a termination condition is achieved
+        # _flatten() is calling itself until a termination condition is achieved
         return merge(node.value, self._flatten(node.next))  # <-- Both arguments are a simple LinkedList each
+
 
 # First Test scenario
 ''' Create a simple LinkedList'''
@@ -325,11 +335,11 @@ linked_list.append(5)
 ''' Create another simple LinkedList'''
 second_linked_list = LinkedList(Node(2))
 second_linked_list.append(4)
-#print(merge(linked_list, second_linked_list).to_list())
+# print(merge(linked_list, second_linked_list).to_list())
 ''' Create a NESTED LinkedList, where each node will be a simple LinkedList in itself'''
-nested_linked_list = NestedLinkedList(Node(linked_list)) # <-- Notice that we are passing a Node made up of a simple LinkedList object
-nested_linked_list.append(second_linked_list) # <-- Notice that we are passing a LinkedList object in the append() function here
-#print(nested_linked_list.flatten().to_list())
+nested_linked_list = NestedLinkedList(Node(linked_list))  # <-- Notice that we are passing a Node made up of a simple LinkedList object
+nested_linked_list.append(second_linked_list)  # <-- Notice that we are passing a LinkedList object in the append() function here
+# print(nested_linked_list.flatten().to_list())
 
 
 
@@ -374,7 +384,7 @@ def even_after_odd(head):
 
     current = head  # <-- "current" represents the current Node.
 
-    # Loop untill there are Nodes available in the LinkedList
+    # Loop until there are Nodes available in the LinkedList
     while current:  # <-- "current" will be updated at the end of each iteration
 
         next_node = current.next  # <-- "next_node" represents the next Node w.r.t. the current Node
@@ -436,7 +446,7 @@ def skip_i_delete_j(head, i, j):
     current = head
     previous = None
 
-    # Traverse - Loop untill there are Nodes available in the LinkedList
+    # Traverse - Loop until there are Nodes available in the LinkedList
     while current:
 
         '''skip (i - 1) nodes'''
@@ -462,7 +472,7 @@ def skip_i_delete_j(head, i, j):
     return head
 
 
-def swap_nodes(head, left_index, right_index):
+def swap_nodes(head, position_one, position_two):
     """
     :param: head- head of input linked list
     :param: `position_one` - indicates position (index) ONE

@@ -50,7 +50,7 @@ def is_palindrome(input):
     Args:
        input(str): input to be checked if it is palindrome
     """
-    # Termination / Base conditionl
+    # Termination / Base conditional
     if len(input) <= 1:
         return True
     else:

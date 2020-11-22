@@ -1,8 +1,9 @@
 
-#=========Stack via Array=========
 
-#using array has a time complexity of O(n) because we have to traverse to increase capacity
-class Stack_Array:
+# =========Stack via Array=========
+
+# using array has a time complexity of O(n) because we have to traverse to increase capacity
+class StackArray:
     def __init__(self, initial_arr=10):
         self.arr = [0 for _ in range(initial_arr)]
         self.next_idx = 0
@@ -38,15 +39,16 @@ class Stack_Array:
         return self.num_elements == 0
 
 
-#=========Stack via Linked List===============
+# =========Stack via Linked List===============
 
-#using Linked List as a stack has O(1) capacity because we're not traversing; just push & pop from the front
+# using Linked List as a stack has O(1) capacity because we're not traversing; just push & pop from the front
 class Node:
     def __init__(self, value):
         self.value = value
         self.next = None
 
-class Stack_LL:
+
+class StackLL:
     def __init__(self):
         self.head = None
         self.num_elements = 0
@@ -89,9 +91,10 @@ class Stack_LL:
             current = current.next
         return out
 
-#========Stack via List=======
 
-class Stack_List:
+# ========Stack via List=======
+
+class StackList:
     def __init__(self):
         self.list = []
 
@@ -117,11 +120,11 @@ def equation_checker(equation):
        bool: Return if parentheses are balanced or not
     """
 
-    # TODO: Intiate stack object
-    # TODO: Interate through equation checking parentheses
+    # TODO: Initiate stack object
+    # TODO: Iterate through equation checking parentheses
     # TODO: Return True if balanced and False if not
 
-    stack = Stack_List()
+    stack = StackList()
     bracks_dict = {'[': ']', '{':'}', '(':')'}
 
     for i in equation:
@@ -136,13 +139,15 @@ def equation_checker(equation):
                 return False
     return stack.size() == 0
 
-#print (equation_checker('((3^2 + 8)*(5/2))/(2+6)'))
-#print (equation_checker('((3^2 + 8)*(5/2))/(2+6))'))
+# print (equation_checker('((3^2 + 8)*(5/2))/(2+6)'))
+# print (equation_checker('((3^2 + 8)*(5/2))/(2+6))'))
 
 
 def evaluate_post_fix(input_list):
     """
     Evaluate the postfix expression to find the answer
+    Note: Postfix notation is a notation for writing arithmetic expressions
+        in which the operands appear before their operators.
 
     Args:
        input_list(list): List containing the postfix expression
@@ -151,9 +156,9 @@ def evaluate_post_fix(input_list):
     """
     # TODO: Iterate over elements
     # TODO: Use stacks to control the element positions
-    #test_case_3 = [["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"], 22]
+    # test_case_3 = [["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"], 22]
 
-    stack = Stack_LL()
+    stack = StackLL()
     for i in input_list:
         print('stack is: {} and operator is: {}'.format(stack.to_list(), i))
         if i == '+':
@@ -194,7 +199,8 @@ def reverse_stack(stack):
         holder_stack.push(popped_element)
     _reverse_stack_recursion(stack, holder_stack)
 
-#used in the function above?
+
+# used in the function above?
 def _reverse_stack_recursion(stack, holder_stack):
     if holder_stack.is_empty():
         return
@@ -213,11 +219,11 @@ def minimum_bracket_reversals(input_string):
        int: Number of breacket reversals needed
     """
 
-    #count { and count }
-    #find the smaller count & subtract it from the other
-    #if sum == 0 return -1
+    # count { and count }
+    # find the smaller count & subtract it from the other
+    # if sum == 0 return -1
 
-    #note: the solution given was using a stack
+    # note: the solution given was using a stack
 
     opens = 0
     closes = 0
@@ -232,4 +238,3 @@ def minimum_bracket_reversals(input_string):
         return closes - opens
     else:
         return -1
-

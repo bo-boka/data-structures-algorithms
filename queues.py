@@ -1,8 +1,9 @@
 
-#========Queue via Array======
+# ========Queue via Array======
 
-#using array has a time complexity of O(n) because we have to traverse to increase capacity
-class Queue_List:
+
+# using array has a time complexity of O(n) because we have to traverse to increase capacity
+class QueueList:
 
     def __init__(self, initial_size=10):
         self.arr = [0 for _ in range(initial_size)]
@@ -35,7 +36,7 @@ class Queue_List:
         return self.queue_size
 
     def is_empty(self):
-        return (self.queue_size)
+        return self.queue_size
 
     def front(self):
         if self.is_empty():
@@ -60,15 +61,17 @@ class Queue_List:
         self.next_index = index
 
 
-#=======Queue via Linked List======
+# =======Queue via Linked List======
 
-#using Linked List  has O(1) capacity because we're not traversing; just referencing the head & tail to dequeue & enqueue
+# using Linked List  has O(1) capacity because we're not traversing;
+#   just referencing the head & tail to dequeue & enqueue
 class Node:
     def __init__(self, value):
         self.value = value
         self.next = None
 
-class Queue_LL:
+
+class QueueLL:
     def __init__(self):
         self.head = None
         self.tail = None
@@ -76,7 +79,7 @@ class Queue_LL:
 
     def enqueue(self, value):
         new_node = Node(value)
-        if self.head == None:
+        if self.head is None:
             self.head = Node(value)
             self.tail = self.head
         else:
@@ -92,7 +95,6 @@ class Queue_LL:
         self.num_elements -= 1
         return val
 
-
     def size(self):
         return self.num_elements
 
@@ -100,7 +102,7 @@ class Queue_LL:
         return self.num_elements == 0
 
 
-#=====Queue via Stack==========
+# =====Queue via Stack==========
 
 class Stack:
     def __init__(self):
@@ -119,7 +121,7 @@ class Stack:
             return self.items.pop()
 
 
-class Queue_Stack:
+class QueueStack:
     def __init__(self):
         self.instorage = Stack()
         self.outstorage = Stack()
@@ -136,7 +138,8 @@ class Queue_Stack:
                 self.outstorage.push(self.instorage.pop())
         return self.outstorage.pop()
 
-class Queue_Py:
+
+class QueuePy:
 
     def __init__(self):
         self.storage = []
@@ -149,6 +152,7 @@ class Queue_Py:
 
     def dequeue(self):
         return self.storage.pop(0)
+
 
 def reverse_queue(queue):
     """
