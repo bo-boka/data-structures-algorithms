@@ -487,7 +487,7 @@ def swap_nodes(head, position_one, position_two):
     if position_one == position_two:
         return head
 
-    # Helper references
+    # Helper references//
     one_previous = None
     one_current = None
 

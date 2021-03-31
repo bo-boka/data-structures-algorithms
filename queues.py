@@ -170,3 +170,4 @@ def reverse_queue(queue):
 
     while not stack.is_empty():
         queue.enqueue(stack.pop())
+
