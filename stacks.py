@@ -73,7 +73,12 @@ class StackLL:
     def top(self):
         if self.head is None:
             return None
-        return self.head.data
+        return self.head.value
+
+    def top_node(self):
+        if self.head is None:
+            return None
+        return self.head
 
     def is_empty(self):
         return self.num_elements == 0
