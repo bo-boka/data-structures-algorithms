@@ -315,6 +315,7 @@ class BinarySearchTree(object):
 
 # ======== Set up tree ==========
 
+
 def convert_arr_to_binary_tree(arr):
     """
     Takes array input representing level order traversal of binary tree.
@@ -439,6 +440,7 @@ class StackLL:
             out.append(current.value)
             current = current.next
         return out
+
 
 def pre_order_traversal(tree, target):
 

@@ -172,7 +172,7 @@ class DoublyLinkedList:
         self.head = None
         self.tail = None
 
-    # DoublyLinkedList.append() has O(1) complexity
+    # DoublyLinkedList append() AND prepend() have O(1) complexity
     def append(self, value):
         if self.head is None:
             self.head = DoubleNode(value)
