@@ -381,8 +381,9 @@ print(node1) # now shows value inside node
 
 # print(binary_tree)
 
-r = convert_arr_to_binary_tree([8, 3, 10, 1, 6, None, 13, None, None, 4, 7, None, None, None, None, None, None])
-binary_search_tree = BinarySearchTree(r)
+# r = convert_arr_to_binary_tree([8, 3, 10, 1, 6, None, 13, None, None, 4, 7, None, None, None, None, None, None])
+# binary_search_tree = BinarySearchTree(r)
+
 # binary_search_tree.insert_with_recursion(5)
 # print(binary_search_tree)
 # binary_search_tree.delete_node_recursion(3)
@@ -695,7 +696,7 @@ def diameter_of_binary_tree(root):
     return current_height, current_diameter
 
 
-print(diameter_of_binary_tree(r))
+# print(diameter_of_binary_tree(r))
 
 
 # ========== Path from Node ==========
@@ -728,3 +729,108 @@ def path_from_node_to_root(root, data):
         right_answer.append(root.data)
         return right_answer
     return None
+
+
+# =================== Heap ====================
+
+class Heap:
+    def __init__(self, initial_size):
+        self.cbt = [None for _ in range(initial_size)]  # initialize arrays
+        self.next_idx = 0  # denotes next index where new element should go
+
+    def up_heapify(self, child_idx):
+        if child_idx == 0:
+            return
+        child_val = self.cbt[child_idx]
+        parent_idx = (child_idx - 1)//2
+        parent_val = self.cbt[parent_idx]
+        if child_val >= parent_val:
+            return
+        self.cbt[parent_idx] = child_val
+        self.cbt[child_idx] = parent_val
+        self.up_heapify(parent_idx)
+
+    def down_heapify(self, parent_idx):
+        parent_val = self.cbt[parent_idx]
+        child_idx_1 = 2 * parent_idx + 1
+        # check if children exist
+        if child_idx_1 >= self.next_idx:
+            return  # there's no 1st or 2nd child so keep parent as is
+        child_val_1 = self.cbt[child_idx_1]
+        child_idx_2 = 2 * parent_idx + 2
+        # if child 2 doesn't exist, compare parent w child 1
+        if child_idx_2 >= self.next_idx:
+            # compare first child to parent
+            if parent_val <= child_val_1:
+                return  # keep parent as is
+            # swap w child 1
+            self.cbt[parent_idx] = child_val_1
+            self.cbt[child_idx_1] = parent_val
+            return self.down_heapify(child_idx_1)
+
+        child_val_2 = self.cbt[child_idx_2]
+
+        # find smallest value
+        if parent_val <= child_val_1:
+            if parent_val <= child_val_2:
+                return  # parent smallest; keep everything as is
+            # child 2 is smallest
+            self.cbt[parent_idx] = child_val_2
+            self.cbt[child_idx_2] = parent_val
+            return self.down_heapify(child_idx_2)
+
+        if child_val_1 <= child_val_2:
+            # child 1 is smallest
+            self.cbt[parent_idx] = child_val_1
+            self.cbt[child_idx_1] = parent_val
+            return self.down_heapify(child_idx_1)
+
+        # child 2 is smallest
+        self.cbt[parent_idx] = child_val_2
+        self.cbt[child_idx_2] = parent_val
+        return self.down_heapify(child_idx_2)
+
+    def insert(self, data):
+
+        # insert at self.next_index
+        self.cbt[self.next_idx] = data
+        child_index = self.next_idx
+        self.next_idx += 1
+        # heapify
+        self.up_heapify(child_index)
+
+        if self.next_idx >= len(self.cbt):
+            temp = self.cbt
+            self.cbt = [None for _ in range(2 * len(self.cbt))]
+
+            for idx in range(self.next_idx):
+                self.cbt[idx] = temp[idx]
+
+    def remove(self):
+        root = self.cbt[0]
+        if root is None:
+            return None
+        # swap root with last index
+        self.cbt[0] = self.cbt[self.next_idx-1]
+        # remove last index
+        self.next_idx -= 1  # this will cause it to be overwritten
+        # down_heapify
+        self.down_heapify(0)
+        return root
+
+    def print_arr(self):
+        return self.cbt
+
+
+heap = Heap(5)
+heap.insert(7)
+heap.insert(2)
+heap.insert(3)
+heap.insert(4)
+heap.insert(5)
+heap.insert(6)
+heap.insert(50)
+print(heap.print_arr())
+# heap.insert(1)
+heap.remove()
+print(heap.print_arr())
