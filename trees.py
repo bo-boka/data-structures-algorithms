@@ -733,7 +733,7 @@ def path_from_node_to_root(root, data):
 
 # =================== Heap ====================
 
-class Heap:
+class MinHeap:
     def __init__(self, initial_size):
         self.cbt = [None for _ in range(initial_size)]  # initialize arrays
         self.next_idx = 0  # denotes next index where new element should go
@@ -751,6 +751,37 @@ class Heap:
         self.up_heapify(parent_idx)
 
     def down_heapify(self, parent_idx):
+        left_idx = 2 * parent_idx + 1
+        right_idx = 2 * parent_idx + 2
+        right_val = None
+        parent_val = self.cbt[parent_idx]
+        minimum = parent_val
+
+        # check if children exist
+        if left_idx >= self.next_idx:
+            return  # there's no 1st or 2nd child so keep parent as is
+
+        left_val = self.cbt[left_idx]
+
+        if right_idx < self.next_idx:
+            right_val = self.cbt[right_idx]
+            minimum = min(right_val, parent_val)
+
+        minimum = min(left_val, minimum)
+
+        if minimum == parent_val:
+            return
+
+        if minimum == left_val:
+            self.cbt[parent_idx] = left_val
+            self.cbt[left_idx] = parent_val
+            return self.down_heapify(left_idx)
+        elif minimum == right_val:
+            self.cbt[parent_idx] = right_val
+            self.cbt[right_idx] = parent_val
+            return self.down_heapify(right_idx)
+
+    def down_heapify_2(self, parent_idx):
         parent_val = self.cbt[parent_idx]
         child_idx_1 = 2 * parent_idx + 1
         # check if children exist
@@ -813,16 +844,15 @@ class Heap:
         # swap root with last index
         self.cbt[0] = self.cbt[self.next_idx-1]
         # remove last index
-        self.next_idx -= 1  # this will cause it to be overwritten
-        # down_heapify
-        self.down_heapify(0)
+        self.next_idx -= 1
+        self.cbt[self.next_idx] = None
+        if self.next_idx > 0:
+            # down_heapify
+            self.down_heapify(0)
         return root
 
-    def print_arr(self):
-        return self.cbt
 
-
-heap = Heap(5)
+heap = MinHeap(5)
 heap.insert(7)
 heap.insert(2)
 heap.insert(3)
@@ -830,7 +860,7 @@ heap.insert(4)
 heap.insert(5)
 heap.insert(6)
 heap.insert(50)
-print(heap.print_arr())
+print(heap.cbt)
 # heap.insert(1)
 heap.remove()
-print(heap.print_arr())
+print(heap.cbt)
