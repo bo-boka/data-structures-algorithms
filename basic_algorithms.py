@@ -217,3 +217,98 @@ def first_and_last_index_2(arr, number):
     last_index = find_end_index(arr, number, 0, len(arr) - 1)
     return [first_index, last_index]
 
+
+def pair_sum(arr, target):
+    """
+    Find two numbers such that their sum is equal to the target w/o using extra space (data structures)
+    Return the two numbers in the form of a sorted list
+    :param: arr - input array
+    :param: target - target value
+    :return: list of two numbers
+    """
+    # sort the list
+    arr.sort()
+
+    # initialize two pointer - one from start of the array and other from the end
+    front_index = 0
+    back_index = len(arr) - 1
+
+    # shift the pointers
+    while front_index < back_index:
+        front = arr[front_index]
+        back = arr[back_index]
+
+        if front + back == target:
+            return [front, back]
+        elif front + back < target:  # sum < target ==> shift front pointer forward
+            front_index += 1
+        else:
+            back_index -= 1  # sum > target ==> shift back pointer backward
+
+    return [None, None]
+
+# input_list = [2, 7, 11, 15, 4, 1]
+# [1,2,4,7,11,15]
+# [1,2,3,4,5,6]
+# print(pair_sum(input_list, 12))
+
+
+# ========================= Maximum Sub-Array ================================
+
+# Helper Function - Find the max crossing sum w.r.t. middle index
+def max_crossing_sum(arr, start, mid, stop):
+    # LEFT PHASE - Traverse the Left part starting from mid element
+    left_sum = arr[mid]  # Denotes the sum of left part from mid element to the current element
+    left_max_sum = arr[mid]  # Keep track of maximum sum
+
+    # Traverse in reverse direction from (mid-1) to start
+    for i in range(mid - 1, start - 1, -1):  # The 2nd argument of range is not inclusive. 3rd argument is the step size
+        left_sum = left_sum + arr[i]
+        if left_sum > left_max_sum:  # Update leftMaxSum
+            left_max_sum = left_sum
+
+    # RIGHT PHASE - Traverse the Right part, starting from (mid+1)
+    right_sum = arr[mid + 1]  # Denotes the sum of right part from (mid+1) element to the current element
+    right_max_sum = arr[mid + 1]  # Keep track of maximum sum
+
+    # Traverse in forward direction from (mid+2) to stop
+    for j in range(mid + 2, stop + 1):  # The second argument of range is not inclusive
+        right_sum = right_sum + arr[j]
+        if right_sum > right_max_sum:  # Update rightMaxSum
+            right_max_sum = right_sum
+
+    # Both left_max_sum and lefttMaxSum each would contain value of atleast one element from the arr
+    return right_max_sum + left_max_sum
+
+
+# Recursive function
+def max_subarray_recursive(arr, start, stop):  # start and stop are the indices
+    # Base case
+    if start == stop:
+        return arr[start]
+
+    if start < stop:
+        mid = (start + stop) // 2  # Get the middle index
+        L = max_subarray_recursive(arr, start, mid)  # Recurse on the Left part
+        R = max_subarray_recursive(arr, mid + 1, stop)  # Recurse on the Right part
+        C = max_crossing_sum(arr, start, mid, stop)  # Find the max crossing sum w.r.t. middle index
+        return max(C, max(L, R))  # Return the maximum of (L,R,C)
+
+    else:  # If ever start > stop. Not feasible.
+        return nums[start]
+
+
+def max_subarray(arr):
+    """
+    Finds the maximum sum of contiguous subarray among all the possible subarrays.
+    O(nlogn) time, using Divide and Conquer approach
+    :param arr: array
+    :return: integer sum
+    """
+    start = 0  # staring index of original array
+    stop = len(arr) - 1  # ending index of original array
+    return max_subarray_recursive(arr, start, stop)
+
+
+arr = [-2, 7, -6, 3, 1, -4, 5, 7]
+print("Maximum Sum = ", max_subarray(arr))  # Outputs 13

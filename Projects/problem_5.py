@@ -25,14 +25,6 @@ class Block:
 
 
 class Blockchain:
-    """
-    Time Complexity: O(1)
-    Adding to the blockchain accesses the tail only which is constant time. The conversion function is only
-    there to facilitate testing but would otherwise decrease the efficiency to O(n).
-
-    Space Complexity: O(n)
-    Class objects have a complexity of O(n)
-    """
 
     def __init__(self):
         self.tail = None

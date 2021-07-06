@@ -7,16 +7,10 @@ class LRU_Cache(object):
     If an element doesn't exist (cache miss), return -1.
     All operations must take O(1) time.
 
-    Time Complexity: O(1)
-    Maps take constant time but are not ordered, which is needed to check recently used elements.
-    A queue can be used to keep track of when elements are used, but only the head and tail are O(1) time.
-    Accessing a middle element from a queue will be O(n) time.
-    Solution is to store queue position data (previous & next nodes) in a map so that data can be
-    accessed in constant time and then the previous & next info can be used to update the queue
-    in constant time.
-
-    Space Complexity: O(n)
-    Solution uses dictionaries, arrays, and class objects which are linear complexity.
+    Notes: Maps take constant time but are not ordered to be able to check recently used elements.
+        Can use a queue to keep track of element use but only the head and tail are O(1) time.
+        Accessing a middle element will be O(n) time.
+        Solution is to store queue data in the map.
     """
 
     PREV = 0

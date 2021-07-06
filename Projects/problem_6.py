@@ -64,27 +64,11 @@ class LinkedList:
 
 
 def union(llist_1, llist_2):
-    """
-    Time Complexity: O(n)
-    Union requires iterating both lists adding them to a 3rd list to remove duplicates, rather than
-    just pointing head to tail. Intersection requires using a map to check one list while iterating
-    the other to avoid a nested loop. Maps are O(1) to index but looping the list makes it linear.
-
-    Space Complexity: O(n)
-    Dictionary and classes are used which are O(n) complexity.
-
-    :param llist_1: linked list 1
-    :param llist_2: linked list 2
-    :return: new linked list
-    """
 
     if llist_1.head is None:
         return llist_2
     if llist_2.head is None:
         return llist_1
-
-    # to remove duplicates, need to iterate list, adding to other, rather than pointing head to tail
-    # have to iterate both lists, creating entirely new list since python is pass by ref
 
     union_llist = LinkedList()
     for l1_item in llist_1.map.keys():
@@ -96,19 +80,7 @@ def union(llist_1, llist_2):
 
 
 def intersection(llist_1, llist_2):
-    """
-    Time Complexity: O(n)
-    Union requires iterating both lists adding them to a 3rd list to remove duplicates, rather than
-    just pointing head to tail. Intersection requires using a map to check one list while iterating
-    the other to avoid a nested loop. Maps are O(1) to index but looping the list makes it linear.
 
-    Space Complexity: O(n)
-    Dictionary and classes are used which are O(n) complexity.
-
-    :param llist_1: linked list 1
-    :param llist_2: linked list 2
-    :return: new linked list
-    """
     if llist_1.head is None:
         return ''
     if llist_2.head is None:

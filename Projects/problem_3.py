@@ -1,4 +1,3 @@
-
 from collections import deque
 import sys
 
@@ -19,18 +18,12 @@ class Node:
 
     def __repr__(self):
         return f"Node({self.char}{self.freq})"
+
     def __str__(self):
         return f"Node({self.char}{self.freq})"
 
 
 class MinHeap:
-    """
-    Time Complexity: O(n)
-    The loops and recursion makes this the complexity linear.
-
-    Space Complexity: O(n)
-    Solution uses dictionaries, arrays, and class objects which are linear complexity.
-    """
 
     def __init__(self, initial_size):
         self.cbt = [None for _ in range(initial_size)]
@@ -40,7 +33,7 @@ class MinHeap:
         if child_idx == 0:
             return
         child_node = self.cbt[child_idx]
-        parent_idx = (child_idx - 1)//2
+        parent_idx = (child_idx - 1) // 2
         parent_node = self.cbt[parent_idx]
         if child_node.freq >= parent_node.freq:
             return
@@ -100,7 +93,7 @@ class MinHeap:
         if root is None:
             return None
         # swap root with last index
-        self.cbt[0] = self.cbt[self.next_idx-1]
+        self.cbt[0] = self.cbt[self.next_idx - 1]
         # remove last index
         self.next_idx -= 1
         self.cbt[self.next_idx] = None
@@ -214,7 +207,7 @@ def huffman_encoding(data):
         code += bit_map[char]
 
     return code, tree_root
-    
+
 
 def huffman_decoding(data, root):
     """
@@ -260,7 +253,6 @@ decoded_data = huffman_decoding(encoded_data, tree)
 print("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
 print("The content of the encoded data is: {}\n".format(decoded_data))
 
-
 # Test case 2
 print('======== Test 2: Single character')
 sentence_2 = "T"
@@ -278,7 +270,6 @@ decoded_data = huffman_decoding(encoded_data, tree)
 print("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
 print("The content of the encoded data is: {}\n".format(decoded_data))
 
-
 # Test case 3
 print('======== Test 3: Repeated same character')
 sentence_2 = "TTT"
@@ -295,7 +286,6 @@ decoded_data = huffman_decoding(encoded_data, tree)
 
 print("The content of the encoded data is: {}\n".format(decoded_data))
 print("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-
 
 # Test case 4
 print('======== Test 4: Large input')
@@ -318,7 +308,6 @@ decoded_data = huffman_decoding(encoded_data, tree)
 
 print("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
 print("The content of the encoded data is: {}\n".format(decoded_data))
-
 
 # Test case 5
 print('======== Test 5: Empty string input')

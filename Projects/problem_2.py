@@ -12,14 +12,6 @@ def find_files(suffix, path):
 
     Cannot use the Python method os.walk()
 
-
-    Time Complexity: O(n)
-    We're iterating through all of the contents in in the input using recursion. So the complexity is linear.
-
-    Space Complexity: O(n)
-    The function is called recursively n times and is popped of the stack before continuing.
-
-
     Args:
       suffix(str): suffix if the file name to be found
       path(str): path of the file system
