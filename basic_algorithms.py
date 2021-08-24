@@ -56,11 +56,11 @@ def binary_search_find_idx_recursive_1(input_list, target):
 
 def binary_search_find_idx_recursive_2(target, source, left=0):
     """
-    Find the index using recursion, alternative.
+    Find the index using recursion, alternative & recommended.
     :param target:
     :param source:
     :param left:
-    :return:
+    :return: index of target value. -1 for not found.
     """
     if len(source) == 0:
         return None
@@ -68,9 +68,9 @@ def binary_search_find_idx_recursive_2(target, source, left=0):
     if source[center] == target:
         return center + left
     elif source[center] < target:
-        return recursive_binary_search(target, source[center+1:], left+center+1)
+        return binary_search_find_idx_recursive_2(target, source[center+1:], left+center+1)
     else:
-        return recursive_binary_search(target, source[:center], left)
+        return binary_search_find_idx_recursive_2(target, source[:center], left)
 
 
 def binary_search_contains(target, source):
@@ -166,7 +166,7 @@ def first_and_last_index_1(input_list, target):
     return [first, last]
 
 # def binary_search_first_and_last_repeated_values(input_list, target):
-print(first_and_last_index_1([1,2,2,2,2,2,2,3,3,3,3,3,4,4, 5,5,5,5,8,9,10], 12))
+# print(first_and_last_index_1([1,2,2,2,2,2,2,3,3,3,3,3,4,4, 5,5,5,5,8,9,10], 12))
 
 
 def first_and_last_index_2(arr, number):
@@ -310,5 +310,317 @@ def max_subarray(arr):
     return max_subarray_recursive(arr, start, stop)
 
 
-arr = [-2, 7, -6, 3, 1, -4, 5, 7]
-print("Maximum Sum = ", max_subarray(arr))  # Outputs 13
+# arr = [-2, 7, -6, 3, 1, -4, 5, 7]
+# print("Maximum Sum = ", max_subarray(arr))  # Outputs 13
+
+
+# ========================= Find Square Root (Floored) ================================
+
+def sqrt(number):
+    """
+    Calculate the floored square root of a number with the expected time complexity of O(log(n))
+
+    Args:
+       number(int): Number to find the floored squared root
+    Returns:
+       int: Floored Square Root
+    """
+
+    if number == 0:
+        return 0
+    if number == 1:
+        return 1
+
+    def sqrt_recursive(sqr):
+
+        same_num = number // sqr
+        if same_num == sqr:
+            return sqr
+
+        return sqrt_recursive(sqr-1)
+
+    start_num = number//2
+
+    return sqrt_recursive(start_num)
+
+
+#print ("Pass" if  (3 == sqrt(9)) else "Fail")
+#print ("Pass" if  (0 == sqrt(0)) else "Fail")
+#print ("Pass" if  (4 == sqrt(16)) else "Fail")
+#print ("Pass" if  (1 == sqrt(1)) else "Fail")
+#print ("Pass" if  (5 == sqrt(27)) else "Fail")
+#print ("Pass" if  (5 == sqrt(25)) else "Fail")
+
+
+# ========================= Find Number in Rotated Array ================================
+
+def rotated_array_search(input_list, number):
+    """
+    Find the index of a target value by searching in a rotated sorted array that has no duplicates.
+    If not found return -1. Complexity should be O(log n).
+
+    *Example of rotated array: [0,1,2,4,5,6,7] might become [4,5,6,7,0,1,2]
+
+    Notes: use modified binary search. When you cut in half, at least one of the halves will be sorted, which can be
+    determined by comparing the lower & mid values. Can then compare those values with the target value to determine if
+    the target is present in that half. Discarding half of the array with each recursion makes this O(log n).
+
+    Args:
+       input_list(array): Input array to search
+       number(int): the target
+    Returns:
+       int: Index or -1
+    """
+
+    if len(input_list) == 0:
+        return -1
+
+    def rotated_binary(low, high):
+
+        if low > high:
+            return -1
+
+        mid = (low + high)//2
+        if input_list[mid] == number:
+            return mid
+
+        # left side is sorted
+        if input_list[low] <= input_list[mid]:
+
+            if input_list[low] <= number <= input_list[mid]:
+                return rotated_binary(low, mid-1)
+            else:
+                return rotated_binary(mid+1, high)
+
+        # right half is sorted
+        else:
+
+            if input_list[mid] <= number <= input_list[high]:
+                return rotated_binary(mid+1, high)
+            else:
+                return rotated_binary(low, mid-1)
+
+    return rotated_binary(0, len(input_list)-1)
+
+'''
+def linear_search(input_list, number):
+    for index, element in enumerate(input_list):
+        if element == number:
+            return index
+    return -1
+
+
+def test_function(test_case):
+    input_list = test_case[0]
+    number = test_case[1]
+    if linear_search(input_list, number) == rotated_array_search(input_list, number):
+        print("Pass")
+    else:
+        print("Fail")
+
+test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 6])
+test_function([[6, 7, 8, 9, 10, 1, 2, 3, 4], 1])
+test_function([[6, 7, 8, 1, 2, 3, 4], 8])
+test_function([[6, 7, 8, 1, 2, 3, 4], 1])
+test_function([[6, 7, 8, 1, 2, 3, 4], 10])
+'''
+
+
+# ========================= Rearrange Array for Maximum Sum ================================
+
+def rearrange_digits(input_list):
+    """
+    Rearrange Array Elements so as to form two-number array such that their sum is maximum. Assume that all elements
+    are in the range [0, 9]. The number of digits in both the numbers cannot differ by more than 1. Use O(n log n)
+    complexity without using any sorting function that Python provides.
+    E.g.: For [1, 2, 3, 4, 5], the expected answer would be [531, 42]. Another expected answer can be [542, 31].
+    In scenarios such as these when there are more than one possible answers, return any one.
+
+    Args:
+       input_list(list): Input List
+    Returns:
+       (int),(int): Two maximum sums
+    """
+
+    #
+    # divide array in half, sort largest to smallest, and convert to number (for odds, one num will be one order larger)
+    # save sum of two numbers to compare to others
+
+    # mergesort all elements O(n log n)
+    # put elements into two separate arrays, dealing one after the other O(n)
+    # done
+
+    # but may want to use heapsort if there are no duplicates so as to preserve space
+
+    if len(input_list) < 2:
+        raise ValueError("input_list has less than 2 elements.")
+
+    for j in range(len(input_list)-1):
+        if type(input_list[j]) is not int:
+            raise ValueError("List contains non-integer at index: {}.".format(j))
+
+    if len(input_list) == 2:
+        return input_list
+
+    def heapify(arr, n, i):
+        """
+        :param: arr - array to heapify
+        n -- number of elements in the array
+        i -- index of the current node
+        TODO: Converts an array (in place) into a maxheap, a complete binary tree with the largest values at the top
+        """
+
+        # Using i as the index of the current node, find the 2 child nodes (if the array were a binary tree)
+        # and find the largest value.   If one of the children is larger swap the values and recurse into that subtree
+
+        # consider current index as largest
+        smallest_index = i
+        left_node = 2 * i + 1  # formula for left child node
+        right_node = 2 * i + 2  # formula for right child node
+
+        # compare with left child
+        if left_node < n and arr[i] > arr[left_node]:
+            smallest_index = left_node
+
+        # compare with right child
+        if right_node < n and arr[smallest_index] > arr[right_node]:
+            smallest_index = right_node
+
+        # if either of left / right child is the smallest node
+        if smallest_index != i:
+            arr[i], arr[smallest_index] = arr[smallest_index], arr[i]
+
+            heapify(arr, n, smallest_index)
+
+    def heapsort(arr):
+        """
+        Convert array to heap tree, which sorts as added. Then convert back to array.
+        :param arr:
+        :return:
+        """
+        # First convert the array into a maxheap by calling heapify on each node, starting from the end
+        # now that you have a maxheap, you can swap the first element (largest) to the end (final position)
+        # and make the array minus the last element into maxheap again.  Continue to do this until the whole
+        # array is sorted
+        n = len(arr)
+
+        # Build a maxheap.
+        for i in range(n, -1, -1):
+            heapify(arr, n, i)
+
+            # One by one extract elements
+        for i in range(n - 1, 0, -1):
+            arr[i], arr[0] = arr[0], arr[i]  # swap
+            heapify(arr, i, 0)
+
+    heapsort(input_list)
+
+    num_1 = num_2 = ''
+    for j in range(len(input_list)):
+        if j % 2 == 0:
+            num_1 += str(input_list[j])
+        else:
+            num_2 += str(input_list[j])
+
+    return [int(num_1), int(num_2)]
+
+
+def test_function(test_case):
+    output = rearrange_digits(test_case[0])
+    solution = test_case[1]
+    if sum(output) == sum(solution):
+        print("Pass")
+    else:
+        print("Fail")
+
+'''
+test_function([[1, 2, 3, 4, 5], [542, 31]])
+test_function([[4, 6, 2, 5, 9, 8], [964, 852]])
+test_function([[4, 6], [4, 6]])
+try:
+    test_function([[], []])
+except ValueError as e:
+    print(e)
+
+try:
+    test_function([[False, False, False], []])
+except ValueError as e:
+    print(e)
+'''
+
+
+# =============== Sort 0,1,2's =====================
+
+def sort_012(input_list):
+    """
+    Input list consisting of only 0s, 1s, and 2s, - sort it in a single traversal.
+        Note that if you can get the function to put the 0s and 2s in the correct positions, this will automatically
+        cause the 1s to be in the correct positions as well.
+    :param input_list:
+    :return:
+    """
+    # initialize pointers for next positions of 0 and 2
+    next_pos_0 = 0
+    next_pos_2 = len(input_list) - 1
+
+    front_index = 0
+
+    while front_index <= next_pos_2:
+        if input_list[front_index] == 0:
+            input_list[front_index] = input_list[next_pos_0]
+            input_list[next_pos_0] = 0
+            next_pos_0 += 1
+            front_index += 1
+        elif input_list[front_index] == 2:
+            input_list[front_index] = input_list[next_pos_2]
+            input_list[next_pos_2] = 2
+            next_pos_2 -= 1
+        else:
+            front_index += 1
+
+    return input_list
+
+
+def test_function(test_case):
+    sorted_array = sort_012(test_case)
+    print(sorted_array)
+    if sorted_array == sorted(test_case):
+        print("Pass")
+    else:
+        print("Fail")
+
+'''
+test_function([0, 0, 2, 2, 2, 1, 1, 1, 2, 0, 2])
+test_function([2, 1, 2, 0, 0, 2, 1, 0, 1, 0, 0, 2, 2, 2, 1, 2, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1])
+test_function([0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2])
+'''
+
+
+# =============== Min & Max Linearly =====================
+
+def get_min_max(ints):
+    """
+    Return a tuple(min, max) out of list of unsorted integers in O(n) without using Python inbuilt functions.
+
+    Args:
+       ints(list): list of integers containing one or more integers
+    """
+    min_int = 0
+    max_int = 0
+
+    for i in range(len(ints)):
+        if i < min_int:
+            min_int = i
+        if i > max_int:
+            max_int = i
+
+    return (min_int, max_int)
+
+
+# Example Test Case of Ten Integers
+import random
+
+l = [i for i in range(0, 10)]  # a list containing 0 - 9
+random.shuffle(l)
+
+print ("Pass" if ((0, 9) == get_min_max(l)) else "Fail")

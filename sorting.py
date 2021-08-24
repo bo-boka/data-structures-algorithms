@@ -293,10 +293,13 @@ def quicksort(items):
 
 def heapify(arr, n, i):
     """
+    Converts an array (in place) into a maxheap, a complete binary tree with the largest values at the top when
+    called from heapsort function.
+    Note that this becomes a minheap when you change the less than symbols to greater than symbols when comparing
+    for largest
     :param: arr - array to heapify
     n -- number of elements in the array
     i -- index of the current node
-    TODO: Converts an array (in place) into a maxheap, a complete binary tree with the largest values at the top
     """
 
     # Using i as the index of the current node, find the 2 child nodes (if the array were a binary tree)
@@ -344,39 +347,9 @@ def heapsort(arr):
         heapify(arr, i, 0)
 
 
-# array = [6,5,3,1,8,7,2,4]
-# heapsort(array)
-# print(array)
-
-
-# =============== Sort 0,1,2's =====================
-
-def sort_012(input_list):
-    """
-    Input list consisting of only 0s, 1s, and 2s, - sort it in a single traversal.
-        Note that if you can get the function to put the 0s and 2s in the correct positions, this will automatically
-        cause the 1s to be in the correct positions as well.
-    :param input_list:
-    :return:
-    """
-    # initialize pointers for next positions of 0 and 2
-    next_pos_0 = 0
-    next_pos_2 = len(input_list) - 1
-
-    front_index = 0
-
-    while front_index <= next_pos_2:
-        if input_list[front_index] == 0:
-            input_list[front_index] = input_list[next_pos_0]
-            input_list[next_pos_0] = 0
-            next_pos_0 += 1
-            front_index += 1
-        elif input_list[front_index] == 2:
-            input_list[front_index] = input_list[next_pos_2]
-            input_list[next_pos_2] = 2
-            next_pos_2 -= 1
-        else:
-            front_index += 1
+array = [6,5,3,1,8,7,2,4]
+heapsort(array)
+print(array)
 
 
 # =============== Quick Select: Divide And Conquer rather than sort =====================
