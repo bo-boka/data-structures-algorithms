@@ -436,22 +436,20 @@ def rearrange_digits(input_list):
     E.g.: For [1, 2, 3, 4, 5], the expected answer would be [531, 42]. Another expected answer can be [542, 31].
     In scenarios such as these when there are more than one possible answers, return any one.
 
+    Steps:
+        -sort input list from max to min with an O(n log n) algorithm
+            -mergesort would work, but heapsort would save space if there are no duplicates
+            -if there are duplicates, heapsort is less stable because it may switch elements having same value
+        -iterate sorted list using modulus to deal elements into two strings
+        -convert strings to integers and put inside list
+
     Args:
        input_list(list): Input List
     Returns:
        (int),(int): Two maximum sums
     """
 
-    #
-    # divide array in half, sort largest to smallest, and convert to number (for odds, one num will be one order larger)
-    # save sum of two numbers to compare to others
-
-    # mergesort all elements O(n log n)
-    # put elements into two separate arrays, dealing one after the other O(n)
-    # done
-
-    # but may want to use heapsort if there are no duplicates so as to preserve space
-
+    # input validation before function definitions to save space
     if len(input_list) < 2:
         raise ValueError("input_list has less than 2 elements.")
 
@@ -508,7 +506,7 @@ def rearrange_digits(input_list):
         for i in range(n, -1, -1):
             heapify(arr, n, i)
 
-            # One by one extract elements
+        # One by one extract elements
         for i in range(n - 1, 0, -1):
             arr[i], arr[0] = arr[0], arr[i]  # swap
             heapify(arr, i, 0)
@@ -553,19 +551,21 @@ except ValueError as e:
 
 def sort_012(input_list):
     """
+    Aka Dutch National Flag Problem
     Input list consisting of only 0s, 1s, and 2s, - sort it in a single traversal.
         Note that if you can get the function to put the 0s and 2s in the correct positions, this will automatically
         cause the 1s to be in the correct positions as well.
     :param input_list:
     :return:
     """
-    # initialize pointers for next positions of 0 and 2
+
     next_pos_0 = 0
     next_pos_2 = len(input_list) - 1
-
     front_index = 0
 
     while front_index <= next_pos_2:
+        if type(input_list[front_index]) is not int:
+            raise TypeError("Input list contains non-integer value(s).")
         if input_list[front_index] == 0:
             input_list[front_index] = input_list[next_pos_0]
             input_list[next_pos_0] = 0
@@ -575,8 +575,10 @@ def sort_012(input_list):
             input_list[front_index] = input_list[next_pos_2]
             input_list[next_pos_2] = 2
             next_pos_2 -= 1
-        else:
+        elif input_list[front_index] == 1:
             front_index += 1
+        else:
+            raise ValueError("Input list contains values greater than 2 or less than 0.")
 
     return input_list
 
@@ -605,16 +607,23 @@ def get_min_max(ints):
     Args:
        ints(list): list of integers containing one or more integers
     """
-    min_int = 0
-    max_int = 0
+
+    if len(ints) == 0:
+        raise ValueError("Input list is empty.")
+
+    min_int = ints[0]
+    max_int = ints[0]
 
     for i in range(len(ints)):
-        if i < min_int:
-            min_int = i
-        if i > max_int:
-            max_int = i
+        val = ints[i]
+        if type(val) is not int:
+            raise TypeError("Input list contains non-integer value(s).")
+        if val < min_int:
+            min_int = val
+        if val > max_int:
+            max_int = val
 
-    return (min_int, max_int)
+    return min_int, max_int
 
 
 # Example Test Case of Ten Integers

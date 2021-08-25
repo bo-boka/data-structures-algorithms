@@ -161,6 +161,10 @@ class Trie:
         self.root = TrieNode()
 
     def insert(self, word):
+
+        if type(word) is not str:
+            raise TypeError("Invalid input for insert(): String expected.")
+
         current_node = self.root
 
         for char in word:
@@ -169,6 +173,10 @@ class Trie:
         current_node.is_word = True
 
     def find(self, prefix):
+
+        if type(prefix) is not str:
+            raise TypeError("Invalid input for find(): String expected.")
+
         current_node = self.root
 
         for char in prefix:
