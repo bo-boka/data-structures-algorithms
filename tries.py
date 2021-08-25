@@ -297,12 +297,24 @@ class Router:
         # You will need to split the path and pass the pass parts
         # as a list to the RouteTrie
 
-        # handle trailing '/'
-        if path[-1] == '/':
-            path = path[:-1]
+        try:
 
-        path_parts = self.split_path(path)
-        self.router.insert(path_parts, handler)
+            if type(path) is not str:
+                raise TypeError("Path in add_handler function must be a string.")
+
+            # handle trailing '/'
+            if path[-1] == '/':
+                path = path[:-1]
+
+            path_parts = self.split_path(path)
+            self.router.insert(path_parts, handler)
+
+        except Exception as e:
+            print(e)
+            handler = self.router.find(self.error_config)
+
+        finally:
+            return handler
 
     def lookup(self, path):
         # lookup path (by parts) and return the associated handler
@@ -312,6 +324,9 @@ class Router:
         # e.g. /about and /about/ both return the /about handler
 
         try:
+
+            if type(path) is not str:
+                raise TypeError("Path in add_handler function must be a string.")
 
             # handle trailing '/'
             if path[-1] == '/':
