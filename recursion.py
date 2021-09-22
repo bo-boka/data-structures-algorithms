@@ -2,6 +2,7 @@
 import copy
 import test
 
+
 def sum_integers(n):
     """calculates sum of all integers from 1 to n
     """
@@ -358,6 +359,9 @@ def staircase(n):
                 2 steps + 1 step
                 3 steps
             n == 5 then answer = 13
+
+    Note that a faster solution includes memoization
+
     param: n - number of steps in the staircase
     Return number of possible ways in which you can climb the staircase
     """
@@ -394,6 +398,7 @@ def last_index(arr, target):
     """
     # we start looking from the last index
     return last_index_arr(arr, target, len(arr) - 1)
+
 
 def last_index_arr(arr, target, index):
     """

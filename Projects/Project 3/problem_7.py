@@ -1,4 +1,6 @@
 import collections
+import re
+
 
 # A RouteTrieNode will be similar to our autocomplete TrieNode... with one additional element, a handler.
 class RouteTrieNode:
@@ -123,8 +125,6 @@ class Router:
         # you need to split the path into parts for
         # both the add_handler and lookup functions,
         # so it should be placed in a function here
-
-        import re  # todo move to top of file
 
         # regex to split path & put into list
         pattern = re.compile(r'/\w*')

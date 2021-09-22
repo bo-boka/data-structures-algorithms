@@ -326,22 +326,25 @@ def sqrt(number):
        int: Floored Square Root
     """
 
-    if number == 0:
-        return 0
-    if number == 1:
-        return 1
+    def sqrt_recursive(low, high, num):
 
-    def sqrt_recursive(sqr):
+        if type(number) != int:
+            raise TypeError("The value entered is not a number.")
+        if number == 0:
+            return 0
+        if number == 1:
+            return 1
 
-        same_num = number // sqr
-        if same_num == sqr:
-            return sqr
+        mid = (low + high) // 2
 
-        return sqrt_recursive(sqr-1)
+        if num // mid == mid:
+            return mid
+        elif num // mid > mid:
+            return sqrt_recursive(mid+1, high, num)
+        else:
+            return sqrt_recursive(low, mid-1, num)
 
-    start_num = number//2
-
-    return sqrt_recursive(start_num)
+    return sqrt_recursive(0, number, number)
 
 
 #print ("Pass" if  (3 == sqrt(9)) else "Fail")
@@ -559,6 +562,9 @@ def sort_012(input_list):
     :return:
     """
 
+    if len(input_list) == 0:
+        return input_list
+
     next_pos_0 = 0
     next_pos_2 = len(input_list) - 1
     front_index = 0
@@ -623,6 +629,7 @@ def get_min_max(ints):
         if val > max_int:
             max_int = val
 
+    print(val)
     return min_int, max_int
 
 

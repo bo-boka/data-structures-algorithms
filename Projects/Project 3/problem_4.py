@@ -9,6 +9,9 @@ def sort_012(input_list):
     :return:
     """
 
+    if len(input_list) == 0:
+        return input_list
+
     next_pos_0 = 0
     next_pos_2 = len(input_list) - 1
     front_index = 0
