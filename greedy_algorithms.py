@@ -44,10 +44,14 @@ class Graph(object):
 
 def dijkstra(graph, start_node, end_node):
     """
+    Find the shortest path from the source node to the end node by creating a dictionary that stores the shortest
+    distances to all nodes.
 
-    :param graph:
-    :param start_node:
-    :param end_node:
+    Time Complexity: O(n log n) because it uses a priority queue data structure.
+
+    :param graph: Graph object with GraphNode objects with GraphEdge objects
+    :param start_node: GraphNode object representing source node
+    :param end_node: GraphNode object representing ending node
     :return:
     """
 
@@ -479,9 +483,9 @@ Item = collections.namedtuple('Item', ['weight', 'value'])
 
 # ------- Naive Implementation ------------
 
-def knapsack_max_value(knapsack_max_weight, items):
-    lastIndex = len(items) - 1
-    return knapsack_recursive(knapsack_max_weight, items, lastIndex)
+def knapsack_naive(knapsack_max_weight, items):
+    last_index = len(items) - 1
+    return knapsack_recursive(knapsack_max_weight, items, last_index)
 
 
 def knapsack_recursive(capacity, items, lastIndex):

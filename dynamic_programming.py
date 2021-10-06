@@ -231,7 +231,7 @@ print('Tests passed!')
 
 # ===================== Longest Common Subsequence - TDA =============================
 
-def lcs_memoization(string_a, string_b):
+def lcs_memoization(str_a, str_b):
     """
     Use the Top Down Approach to determine longest sequence of letters that are present in both the given two strings
     in the same relative order but needn't be a contiguous substring.
@@ -247,7 +247,48 @@ def lcs_memoization(string_a, string_b):
     :param string_b: 2nd string
     :return: length of longest common subsequence
     """
-    return
+
+    def lcs(a, b):
+
+        if a == 0 or b == 0:
+            return 0
+
+        # If we have already computed this, use memoization
+        if cache[a - 1][b - 1] != -1:
+            return cache[a - 1][b - 1]
+
+        a_last_char = str_a[a - 1]
+        b_last_char = str_b[b - 1]
+
+        if a_last_char == b_last_char:
+            cache[a - 1][b - 1] = 1 + lcs(a - 1, b - 1)
+        else:
+            cache[a - 1][b - 1] = max(lcs(a - 1, b), lcs(a, b - 1))
+
+        return cache[a - 1][b - 1]
+
+    # Initialise a 2D array with NULL
+    cache = [[-1 for j in range(len(str_b))] for i in range(len(str_a))]
+    return lcs(len(str_a), len(str_b))
+
+'''
+# Tests
+test_A1 = "WHOWEEKLY"
+test_B1 = "HOWONLY"
+
+lcs_val1 = lcs_memoization(test_A1, test_B1)
+
+test_A2 = "CATSINSPACETWO"
+test_B2 = "DOGSPACEWHO"
+
+lcs_val2 = lcs_memoization(test_A2, test_B2)
+
+print('LCS val 1 = ', lcs_val1)
+assert lcs_val1==5, "Incorrect LCS value."
+print('LCS val 2 = ', lcs_val2)
+assert lcs_val2==7, "Incorrect LCS value."
+print('Tests passed!')
+'''
 
 
 # ===================== Longest Palindromic Sequence =============================
@@ -286,15 +327,16 @@ def lps(input_string):
         table[i][i] = 1
 
     # consider all substrings
-    for s_size in range(2, n + 1):  # 3
+    for s_size in range(2, n + 1):  # 2
 
-        for start_idx in range(n - s_size + 1):  # 1
-            end_idx = start_idx + s_size - 1  # 3
+        for start_idx in range(n - s_size + 1):  # 4
+            end_idx = start_idx + s_size - 1  # 5
+            # note: not seeing why this case is added since it's still covered in the general match case below (the diagonal/bottom-left will be 0 so you're still just adding 2 to 0)
             if s_size == 2 and input_string[start_idx] == input_string[end_idx]:
-                # match with a substring of length 2
+                # matching letters are next to each other: match with a substring of length 2
                 table[start_idx][end_idx] = 2
             elif input_string[start_idx] == input_string[end_idx]:
-                # general match case
+                # general match case: assign diagonal/bottom-left plus 2
                 table[start_idx][end_idx] = table[start_idx + 1][end_idx - 1] + 2
             else:
                 # no match case, taking the max of either left cell or bottom cell
@@ -309,4 +351,169 @@ def lps(input_string):
     return table[0][n - 1]  # value in top right corner of matrix
 
 
-print(lps('maxdyam'))
+# print(lps('maxdyam'))
+
+
+# ===================== Coin Change Problem =============================
+
+def coin_change(coins, amount):
+    """
+    You are given coins of different denominations and a total amount of money. Write a function to compute the fewest
+    coins needed to make up that amount.
+    If that amount of money cannot be made up by any combination of the coins, return -1.
+
+    As an example:
+        Input: coins = [1, 2, 3], amount = 6
+        Output: 2
+        Explanation: The output is 2 because we can use 2 coins with value 3. That is, 6 = 3 + 3. We could also use
+        3 coins with value 2 (that is, 6 = 2 + 2 + 2), but this would use more coins—and the problem specifies we should
+        use the smallest number of coins possible.
+
+    :param coins: list of integers representing coin values
+    :param amount: integer representing amount of money
+    :return: integer of fewest coins needed to reach the given amount
+    """
+
+    def cc_recur(amt):
+
+        if amt == 0:
+            return 0
+        if amt < 0:
+            return -1
+
+
+
+
+
+
+# Tests
+print(coin_change([1, 2, 5], 11))  # expected 3
+print(coin_change([1, 4, 5, 6], 23))  # expected 4
+print(coin_change([5, 7, 8], 2))  # expected -1
+
+
+# Coin Change Solution One
+
+# Let's assume F(Amount) is the minimum number of coins needed to make a change from coins [C0, C1, C2...Cn-1]
+# Then, we know that F(Amount) = min(F(Amount-C0), F(Amount-C1), F(Amount-C2)...F(Amount-Cn-1)) + 1
+
+# Base Cases:
+# when Amount == 0: F(Amount) = 0
+# when Amount < 0: F(Amount) =  float('inf')
+
+def coin_change(coins, amount):
+    # Create a memo that will storing the fewest coins with given amount
+    # that we have already calculated so that we do not have to do the
+    # calculation again.
+    memo = {}
+
+    def return_change(remaining):
+        # Base cases
+        if remaining < 0:  return float('inf')
+        if remaining == 0: return 0
+
+        # Check if we have already calculated
+        if remaining not in memo:
+            # If not previously calculated, calculate it by calling return_change with the remaining amount
+            memo[remaining] = min(return_change(remaining - c) + 1 for c in coins)
+        return memo[remaining]
+
+    res = return_change(amount)
+
+    # return -1 when no change found
+    return -1 if res == float('inf') else res
+
+
+# Coin Change Solution Two
+
+# We initiate F[Amount] to be float('inf') and F[0] = 0
+# Let F[Amount] to be the minimum number of coins needed to get change for the Amount.
+# F[Amount + coin] = min(F(Amount + coin), F(Amount) + 1) if F[Amount] is reachable.
+# F[Amount + coin] = F(Amount + coin) if F[Amount] is not reachable.
+
+def coin_change(coins, amount):
+    # initiate the list with length amount + 1 and prefill with float('inf')
+    res = [float('inf')] * (amount + 1)
+
+    # when amount = 0, 0 number of coins will be needed for the change
+    res[0] = 0
+
+    i = 0
+    while (i < amount):
+        if res[i] != float('inf'):
+            for coin in coins:
+                if i <= amount - coin:
+                    res[i + coin] = min(res[i] + 1, res[i + coin])
+        i += 1
+
+    if res[amount] == float('inf'):
+        return -1
+    return res[amount]
+
+
+# ===================== Max Stock Price Returns =============================
+
+def max_returns(prices):
+    """
+    You are given access to yesterday's stock prices for a single stock. The data is in the form of an array with the
+    stock price in 30 minute intervals from 9:30 a.m EST opening to 4:00 p.m EST closing time. With this data, write a
+    function that returns the maximum profit obtainable. You will need to buy before you can sell.
+
+    Consider time complexity in solution
+
+    Example:
+        prices = [3, 4, 7, 8, 6]
+            Note: This is a shortened array, just for the sake of example—a full set of prices for the day would have
+            13 elements (one price for each 30 minute interval between 9:30 and 4:00), as seen in the test cases.
+        Explanation: In order to get the maximum profit in this example, you would want to buy at a price of 3 and sell
+        at a price of 8 to yield a maximum profit of 5. In other words, you are looking for the greatest possible
+        difference between two numbers in the array.
+
+    The Idea:
+
+        The given array has the prices of a single stock at 13 different timestamps. The idea is to pick two timestamps:
+        buy_at_min" and "sell_at_max" such that the buy is made before a sell. We will use two pairs of indices while
+        traversing the array:
+            Pair 1 - This pair keeps track of our maximum profit while iterating over the list. It is done by storing a
+                pair of indices - min_price_index, and max_price_index.
+            Pair 2 - This pair keeps track of the profit between the lowest price seen so far and the current price
+                while traversing the array. The lowest price seen so far is maintained with current_min_price_index.
+        At each step we will make the greedy choice by choosing prices such that our profit is maximum.
+        We will store the maximum of either of the two profits mentioned above.
+
+    Args:
+       prices: array of prices
+    Returns:
+       int: The maximum profit possible
+    """
+
+    return prices
+
+
+# Tests
+print(max_returns([2, 2, 7, 9, 9, 12, 18, 23, 34, 37, 45, 54, 78]))  # expected 76
+print(max_returns([54, 18, 37, 9, 11, 48, 23, 1, 7, 34, 2, 45, 67]))  # expected 66
+print(max_returns([78, 54, 45, 37, 34, 23, 18, 12, 9, 9, 7, 2, 2]))  # expected 0
+
+
+# Stock Prices Solution
+
+def max_returns(arr):
+    min_price_index = 0
+    max_price_index = 1
+    current_min_price_index = 0
+
+    if len(arr) < 2:
+        return
+
+    for index in range(1, len(arr)):
+        # current minimum price
+        if arr[index] < arr[current_min_price_index]:
+            current_min_price_index = index
+
+        # current max profit
+        if arr[max_price_index] - arr[min_price_index] < arr[index] - arr[current_min_price_index]:
+            max_price_index = index
+            min_price_index = current_min_price_index
+    max_profit = arr[max_price_index] - arr[min_price_index]
+    return max_profit
