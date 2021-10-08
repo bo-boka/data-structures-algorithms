@@ -354,13 +354,23 @@ def lps(input_string):
 # print(lps('maxdyam'))
 
 
-# ===================== Coin Change Problem =============================
+# ===================== Coin Change Problem - TDA =============================
 
-def coin_change(coins, amount):
+def coin_change_memoization(coins, amount):
     """
     You are given coins of different denominations and a total amount of money. Write a function to compute the fewest
-    coins needed to make up that amount.
+    coins needed to make up that amount using a top-down approach.
     If that amount of money cannot be made up by any combination of the coins, return -1.
+
+    Note: A greedy approach, where we choose the largest coin amounts first would not work because we could end up with
+          a large coin and a bunch of small ones. E.g. if amt = 7, coins = [1,3,4,5] a greedy approach would have us
+          choose [5,1,1] instead of [4,3]
+
+    Logic: Let's assume F(Amount) is the minimum number of coins needed to make a change from coins [C0, C1, C2...Cn-1]
+           Then, we know that F(Amount) = min(F(Amount-C0), F(Amount-C1), F(Amount-C2)...F(Amount-Cn-1)) + 1
+
+    Time Complexity: O(Nm) where N is the amount and m is the len of coins
+    Space Complexity: O(n)
 
     As an example:
         Input: coins = [1, 2, 3], amount = 6
@@ -374,38 +384,7 @@ def coin_change(coins, amount):
     :return: integer of fewest coins needed to reach the given amount
     """
 
-    def cc_recur(amt):
-
-        if amt == 0:
-            return 0
-        if amt < 0:
-            return -1
-
-
-
-
-
-
-# Tests
-print(coin_change([1, 2, 5], 11))  # expected 3
-print(coin_change([1, 4, 5, 6], 23))  # expected 4
-print(coin_change([5, 7, 8], 2))  # expected -1
-
-
-# Coin Change Solution One
-
-# Let's assume F(Amount) is the minimum number of coins needed to make a change from coins [C0, C1, C2...Cn-1]
-# Then, we know that F(Amount) = min(F(Amount-C0), F(Amount-C1), F(Amount-C2)...F(Amount-Cn-1)) + 1
-
-# Base Cases:
-# when Amount == 0: F(Amount) = 0
-# when Amount < 0: F(Amount) =  float('inf')
-
-def coin_change(coins, amount):
-    # Create a memo that will storing the fewest coins with given amount
-    # that we have already calculated so that we do not have to do the
-    # calculation again.
-    memo = {}
+    memo = {}  # store calculated values to avoid recomputation
 
     def return_change(remaining):
         # Base cases
@@ -414,41 +393,77 @@ def coin_change(coins, amount):
 
         # Check if we have already calculated
         if remaining not in memo:
-            # If not previously calculated, calculate it by calling return_change with the remaining amount
+            # calculate & store for each amount.
+            # +1 for each -c because we're adding a coin to the count when we subtract it's value from amount
             memo[remaining] = min(return_change(remaining - c) + 1 for c in coins)
         return memo[remaining]
 
     res = return_change(amount)
-
+    print(memo)
     # return -1 when no change found
     return -1 if res == float('inf') else res
 
 
-# Coin Change Solution Two
+'''
+# Tests
+print(coin_change_memoization([1, 2, 5], 11))  # expected 3
+print(coin_change_memoization([1, 4, 5, 6], 23))  # expected 4
+print(coin_change_memoization([5, 7, 8], 2))  # expected -1
+'''
 
-# We initiate F[Amount] to be float('inf') and F[0] = 0
-# Let F[Amount] to be the minimum number of coins needed to get change for the Amount.
-# F[Amount + coin] = min(F(Amount + coin), F(Amount) + 1) if F[Amount] is reachable.
-# F[Amount + coin] = F(Amount + coin) if F[Amount] is not reachable.
 
-def coin_change(coins, amount):
-    # initiate the list with length amount + 1 and prefill with float('inf')
-    res = [float('inf')] * (amount + 1)
+# ===================== Coin Change Problem - BUA =============================
+
+def coin_change_tabulation(coins, amount):
+    """
+    You are given coins of different denominations and a total amount of money. Write a function to compute the fewest
+    coins needed to make up that amount using a bottom-up approach.
+    If that amount of money cannot be made up by any combination of the coins, return -1.
+
+    Note: A greedy approach, where we choose the largest coin amounts first would not work because we could end up with
+          a large coin and a bunch of small ones. E.g. if amt = 7, coins = [1,3,4,5] a greedy approach would have us
+          choose [5,1,1] instead of [4,3]
+
+    Time Complexity: O(Nm) where N is the amount and m is the len of coins
+    Space Complexity: O(n)
+
+    As an example:
+        Input: coins = [1, 2, 3], amount = 6
+        Output: 2
+        Explanation: The output is 2 because we can use 2 coins with value 3. That is, 6 = 3 + 3. We could also use
+        3 coins with value 2 (that is, 6 = 2 + 2 + 2), but this would use more coins—and the problem specifies we should
+        use the smallest number of coins possible.
+
+    :param coins: list of integers representing coin values
+    :param amount: integer representing amount of money
+    :return: integer of fewest coins needed to reach the given amount
+    """
+
+    # initiate the list with length amount + 1 and prefill with the max value
+    table = [amount + 1] * (amount + 1)  # can also use float('inf') but we know that max is anything over the amount
 
     # when amount = 0, 0 number of coins will be needed for the change
-    res[0] = 0
+    table[0] = 0
 
-    i = 0
-    while (i < amount):
-        if res[i] != float('inf'):
-            for coin in coins:
-                if i <= amount - coin:
-                    res[i + coin] = min(res[i] + 1, res[i + coin])
-        i += 1
+    for a in range(1, amount + 1):  # 'a' represents the smaller problem to solve, starting from bottom up (1...)
+        for c in coins:
 
-    if res[amount] == float('inf'):
-        return -1
-    return res[amount]
+            # if current amount, a, minus a coin value, c, doesn't go below 0,
+            # we can still find a solution for the table, even if it's not the most optimal
+            if a - c >= 0:
+                # set to min between current solution (itself) or new solution (itself minus another coin)
+                # +1 because we add a coin to the solution every time we subtract a coin value from the amount
+                table[a] = min(table[a], 1 + table[a-c])  # this is the recurrence relation
+
+    return table[amount] if table[amount] != amount + 1 else -1
+
+
+'''
+# Tests
+print(coin_change_tabulation([1, 2, 5], 11))  # expected 3
+print(coin_change_tabulation([1, 4, 5, 6], 23))  # expected 4
+print(coin_change_tabulation([5, 7, 8], 2))  # expected -1
+'''
 
 
 # ===================== Max Stock Price Returns =============================
@@ -465,14 +480,15 @@ def max_returns(prices):
         prices = [3, 4, 7, 8, 6]
             Note: This is a shortened array, just for the sake of example—a full set of prices for the day would have
             13 elements (one price for each 30 minute interval between 9:30 and 4:00), as seen in the test cases.
+        Solution: 5
         Explanation: In order to get the maximum profit in this example, you would want to buy at a price of 3 and sell
         at a price of 8 to yield a maximum profit of 5. In other words, you are looking for the greatest possible
-        difference between two numbers in the array.
+        difference between two numbers in the array such that the smaller number is sequentially first.
 
     The Idea:
 
         The given array has the prices of a single stock at 13 different timestamps. The idea is to pick two timestamps:
-        buy_at_min" and "sell_at_max" such that the buy is made before a sell. We will use two pairs of indices while
+        "buy_at_min" and "sell_at_max" such that the buy is made before a sell. We will use two pairs of indices while
         traversing the array:
             Pair 1 - This pair keeps track of our maximum profit while iterating over the list. It is done by storing a
                 pair of indices - min_price_index, and max_price_index.
@@ -487,7 +503,25 @@ def max_returns(prices):
        int: The maximum profit possible
     """
 
-    return prices
+    if len(prices) < 2:
+        return None  # (should throw exception)
+
+    min_idx = 0
+    max_idx = 1
+    temp_min = 0
+
+    for i in range(1, len(prices)):
+
+        # set temporary min until you find a new max so that min doesn't pass max
+        if prices[i] < prices[temp_min]:
+            temp_min = i
+
+        # when new max profit found, set max & min
+        if prices[max_idx] - prices[min_idx] < prices[i] - prices[temp_min]:
+            max_idx = i
+            min_idx = temp_min
+
+    return prices[max_idx] - prices[min_idx]
 
 
 # Tests
@@ -496,24 +530,3 @@ print(max_returns([54, 18, 37, 9, 11, 48, 23, 1, 7, 34, 2, 45, 67]))  # expected
 print(max_returns([78, 54, 45, 37, 34, 23, 18, 12, 9, 9, 7, 2, 2]))  # expected 0
 
 
-# Stock Prices Solution
-
-def max_returns(arr):
-    min_price_index = 0
-    max_price_index = 1
-    current_min_price_index = 0
-
-    if len(arr) < 2:
-        return
-
-    for index in range(1, len(arr)):
-        # current minimum price
-        if arr[index] < arr[current_min_price_index]:
-            current_min_price_index = index
-
-        # current max profit
-        if arr[max_price_index] - arr[min_price_index] < arr[index] - arr[current_min_price_index]:
-            max_price_index = index
-            min_price_index = current_min_price_index
-    max_profit = arr[max_price_index] - arr[min_price_index]
-    return max_profit
