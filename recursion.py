@@ -381,7 +381,7 @@ def staircase(n):
     return staircase(n - 1) + staircase(n - 2) + staircase(n - 3)
 
 # test_function(3, 4, staircase)
-test.test_function(5, 13, staircase)
+# test.test_function(5, 13, staircase)
 
 
 def last_index(arr, target):
@@ -413,3 +413,44 @@ def last_index_arr(arr, target, index):
     return last_index_arr(arr, target, index - 1)
 
 
+def floor_tiles(arr):
+    """
+    Given an array that represents floor tiles with numbers on them & each tile represents a number of tiles
+    you can jump to (indexes in the array). Return whether or not you can get to the end tile (index).
+
+    Example:
+        [3,1,2,0,1] -> true
+        [1,2,0,1] -> false
+        [5,0,0,0] -> true
+
+    :param arr: array of integers representing number of tiles
+    :return: boolean if the last tile is reachable
+    """
+
+    # recur on each tile until reach end of arr or end of recursion
+
+    def recur_tiles(tile_idx):
+
+        print(tile_idx)
+
+        if tile_idx >= len(arr)-1:
+            return True
+        if arr[tile_idx] == 0:
+            return False
+
+        for jumps in range(arr[tile_idx], 0, -1):
+            print('tile:', tile_idx, '---jumps:', jumps)
+            has_succeeded = recur_tiles(tile_idx+jumps)
+            if has_succeeded:
+                return True
+
+        return False
+
+    return recur_tiles(0)
+
+
+# my_arr = [3,0,2,0,1]
+# my_arr = [1,2,0,1,0,0]
+# my_arr = [5,0,0,0]
+# my_arr = [2,0,5,0,0,0]
+print('floor tiles:', floor_tiles(my_arr))

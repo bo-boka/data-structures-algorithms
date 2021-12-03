@@ -347,26 +347,82 @@ def heapsort(arr):
         heapify(arr, i, 0)
 
 
-array = [6,5,3,1,8,7,2,4]
-heapsort(array)
-print(array)
+# array = [6,5,3,1,8,7,2,4]
+# heapsort(array)
+# print(array)
 
 
 # =============== Quick Select: Divide And Conquer rather than sort =====================
 
 def quick_select(arr, k):
     """
-    Find the k-th element of an unsorted array without sorting first, which would bring the average efficiency
-    from O(n log(n)), using a sorting algo, to O(n) without sorting. Similar to QuickSort, worst case is O(n^2) and will
-    be doing same functionality except only recurs the side that contains the k-th element. K represents the index+1
-    (plus 1 since index starts at 0) you would want if the array was already sorted.
-    We're using "Divide and Conquer" but only on part of the array instead of sorting the entire thing.
+    Find the k-th element (aka kth smallest) of an unsorted array without sorting first, which would bring the average
+    efficiency from O(n log(n)), using a sorting algo, to O(n) without sorting. "Divide and Conquer" algo.
 
-    Implement the algorithm explained above to find the k^th largest element in the given array
+    Similar to QuickSort, worst case is O(n^2) and will be doing same functionality except only recurs the side that
+    contains the k-th index. To avoid a worst case scenario, pick a good pivot. For this implementation, we're using the
+    standard last element as a pivot. The fast_select algo below uses the approximate median as a pivot.
 
-    :param arr:
-    :param k:
-    :return:
+    Kth smallest is implemented by default. To get Kth largest, change the conditional to less than when checking
+    the pivot value.
+
+    :param arr: array of elements
+    :param k: index
+    :return: value of the kth index element when sorted
+    """
+
+    def quick_select_recur(start_idx, end_idx):
+
+        left_idx = start_idx
+        pivot_idx = end_idx
+        pivot_val = arr[pivot_idx]
+
+        while left_idx != pivot_idx:
+
+            item = arr[left_idx]
+
+            # if smaller than pivot, move on
+            if pivot_val >= item:
+                left_idx += 1
+                continue
+
+            # if larger than pivot, move to right of pivot & move pivot left
+            arr[left_idx] = arr[pivot_idx - 1]
+            arr[pivot_idx - 1] = pivot_val
+            arr[pivot_idx] = item
+            pivot_idx -= 1
+
+        print('qs array:', arr)
+        if pivot_idx == k:
+            return pivot_val
+        elif pivot_idx < k:
+            return quick_select_recur(pivot_idx+1, end_idx)
+        else:
+            return quick_select_recur(start_idx, pivot_idx-1)
+
+    return quick_select_recur(0, len(arr)-1)
+
+
+# array = [33,3,2,8,5,1,22,7,75,24,50,58,40,45,27,2,9]
+# print(fast_select(array, len(array)//2))
+# Arr = [6, 80, 36, 8, 23, 7, 10, 12, 42]
+# k = 4
+# print(quick_select(Arr, k))        # Outputs 12
+
+
+# =============== Fast Select - Median of Medians + QuickSelect =====================
+
+def fast_select(arr, k):
+    """
+    Find the k-th smallest element of an unsorted array in O(n) time. This utilizes the median of medians
+    algorithm and quickselect algorithm. Using an approximate median as a pivot reduces chance of worst case.
+
+    Note: the sort function doesn't push the runtime to O(n log n) because it's only sorting 5 elements
+    at a time.
+
+    :param arr: array of elements
+    :param k: index
+    :return: value of the kth index element when sorted
     """
     n = len(arr)  # length of the original array
 
@@ -394,7 +450,7 @@ def quick_select(arr, k):
         if len(set_of_medians) == 1:  # Base case for this task
             pivot = set_of_medians[0]
         elif len(set_of_medians) > 1:
-            pivot = quick_select(set_of_medians, (len(set_of_medians) // 2))
+            pivot = fast_select(set_of_medians, (len(set_of_medians) // 2))
 
         # Step 4 - Partition the original arr into three sub-arrays
         for element in arr:
@@ -407,10 +463,10 @@ def quick_select(arr, k):
 
         # Step 5 - Recurse based on the sizes of the three sub-arrays
         if k <= len(arr_less_p):
-            return quick_select(arr_less_p, k)
+            return fast_select(arr_less_p, k)
 
         elif k > (len(arr_less_p) + len(arr_equal_p)):
-            return quick_select(arr_more_p, (k - len(arr_less_p) - len(arr_equal_p)))
+            return fast_select(arr_more_p, (k - len(arr_less_p) - len(arr_equal_p)))
 
         else:
             return pivot
@@ -422,7 +478,7 @@ def find_median(arr, start, size):
     for i in range(start, start + size):
         my_list.append(arr[i])
 
-        # Sort the array
+    # Sort the array
     my_list.sort()
 
     # Return the middle element
@@ -430,7 +486,10 @@ def find_median(arr, start, size):
 
 
 # array = [33,3,2,8,5,1,22,7,75,24,50,58,40,45,27,2,9]
-# print(quick_select(array, len(array)//2))
+# print(fast_select(array, len(array)//2))
 # Arr = [6, 80, 36, 8, 23, 7, 10, 12, 42]
-# k = 5
-# print(quick_select(Arr, k))        # Outputs 12
+# k = 7
+# print(fast_select(Arr, k))        # Outputs 12
+
+
+
