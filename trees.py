@@ -44,16 +44,6 @@ class Node(object):
 
 class Tree(object):
     def __init__(self, value=None):
-        self.root = Node(value)
-
-    def get_root(self):
-        return self.root
-
-
-# =========== Binary Search Tree ================
-
-class BinarySearchTree(object):
-    def __init__(self, value=None):
         if isinstance(value, Node):
             self.root = value
         else:
@@ -62,8 +52,48 @@ class BinarySearchTree(object):
     def get_root(self):
         return self.root
 
-    def set_root(self, value):
-        self.root = value
+    def __repr__(self):
+        """
+        overwrite py print functionality to print a tree in a visually appeasing way using BFS traversal
+        :return: string of visual representation of a tree
+        """
+        level = 0
+        q = deque()
+        visit_order = list()
+        node = self.get_root()
+        q.appendleft((node, level))
+        while q:
+            node, level = q.pop()
+            if node is None:
+                visit_order.append(('<empty>', level))
+                continue
+            visit_order.append((node, level))
+            if node.has_left_child():
+                q.appendleft((node.get_left_child(), level + 1))
+            else:
+                q.appendleft((None, level + 1))
+
+            if node.has_right_child():
+                q.appendleft((node.get_right_child(), level + 1))
+            else:
+                q.appendleft((None, level + 1))
+
+        s = "Tree:\n"
+        previous_level = -1
+        for i in range(len(visit_order)):
+            node, level = visit_order[i]
+            if level == previous_level:
+                s += " | " + str(node)
+            else:
+                s += "\n" + str(node)
+                previous_level = level
+
+        return s
+
+
+# =========== Binary Search Tree ================
+
+class BinarySearchTree(Tree):
 
     def compare(self, node, new_node):
         """
@@ -145,7 +175,9 @@ class BinarySearchTree(object):
 
     def min_value_node(self, node):
         """
-        Given a non-empty binary search tree, loop leftmost bottom leaf
+        Given a non-empty binary search tree, loop leftmost bottom leaf. Used in the delete function to find
+        the next smallest node after the one being deleted, i.e. left leaf of the right branch.
+        :param:  node - right  node
         :return: node with minimum key value found in that tree.
         """
         current = node
@@ -155,84 +187,6 @@ class BinarySearchTree(object):
             current = current.left
 
         return current
-
-    def delete_untested(self, value):
-        # case 1: leaf
-        # case 2: single child
-            # a. left only
-            # b. right only
-        # case 3: double child with children
-            # 1. find either the next highest or next lowest node from the one you want to delete
-                # for lowest: go to first element of left sub-tree & then bottom-most right child down the tree,
-                # vice versa for next highest
-            # 2. Remove the found node in preparation for replacing delete node
-                # make a copy & point it's parent's right child to the found node's left child
-            # 3. delete node & replace with the copied node
-                # point copied node's left & right to delete node's left & right
-                # point parent of delete node to copied node
-        # case 4: delete node is root (TODO)
-            # TODO
-        # case 5: delete node doesn't exist
-
-        parent = None
-        node = self.root
-
-        # find node to delete
-        while node and node.value != value:
-            parent = node
-            if value < node.value:
-                node = node.get_left_child()
-            elif value > node.value:
-                node = node.get_right_child()
-
-        # node to delete doesn't exist case
-        if node is None or node.value != value:
-            return False
-
-        # root node case
-
-        # leaf node case (childless)
-        if node.get_left_child() is None:
-            if node.get_right_child() is None:
-                parent.set_right_child(None)
-                parent.set_left_child(None)
-                return
-            # right child only case
-            else:
-                if parent.value > node.value:
-                    parent.set_left_child(node.get_right_child())
-                else:
-                    parent.set_right_child(node.get_right_child())
-                return
-        # left child only case
-        if node.get_right_child() is None:
-            if parent.value > node.value:
-                parent.set_left_child(node.get_left_child())
-            else:
-                parent.set_right_child(node.get_left_child())
-            return
-
-        # double child case
-        # find next highest by getting last left node in right sub-tree
-        parent_replacement_node = node
-        replacement_node = node.get_right_child()
-        while replacement_node.get_left_child():
-            parent_replacement_node = replacement_node
-            replacement_node = get_left_child()
-        print("Next highest: {}".format(replacement_node.value))
-        # make copy of replacement node
-        temp_node = replacement_node
-        # point temp node children to delete node children
-        temp_node.set_right_child(node.get_right_child())
-        temp_node.set_left_child(node.get_left_child())
-        # point deletion parent node to new temp node
-        if parent.value > node.value:
-            parent.set_left_child(temp_node)
-        else:
-            parent.set_right_child(temp_node)
-        # delete replacement node
-        if replacement_node.has_right_child():
-            parent_replacement_node.set_left_child(replacement_node.get_right_child())
 
     def delete_node_recursion(self, value):
         """
@@ -276,69 +230,32 @@ class BinarySearchTree(object):
         root = self.root
         print(delete_node(root, value))
 
-    def __repr__(self):
-        """
-        overwrite py print functionality to print a tree in a visually appeasing way using BFS traversal
-        :return: string of visual representation of a tree
-        """
-        level = 0
-        q = deque()
-        visit_order = list()
-        node = self.get_root()
-        q.appendleft((node, level))
-        while q:
-            node, level = q.pop()
-            if node is None:
-                visit_order.append(('<empty>', level))
-                continue
-            visit_order.append((node, level))
-            if node.has_left_child():
-                q.appendleft((node.get_left_child(), level + 1))
-            else:
-                q.appendleft((None, level + 1))
-
-            if node.has_right_child():
-                q.appendleft((node.get_right_child(), level + 1))
-            else:
-                q.appendleft((None, level + 1))
-
-            s = "Tree\n"
-            previous_level = -1
-            for i in range(len(visit_order)):
-                node, level = visit_order[i]
-                if level == previous_level:
-                    s += " | " + str(node)
-                else:
-                    s += "\n" + str(node)
-                    previous_level = level
-        return s
 
 # ======== Set up tree ==========
-
 
 def convert_arr_to_binary_tree(arr):
     """
     Takes array input representing level order traversal of binary tree.
-    Note that nodes with empty children are represented as None. If there aren't enought None type elements to
+    Note that nodes with empty children are represented as None. If there aren't enough None type elements to
     represent empty children, an IndexError will be thrown
     :param arr: array of level order binary tree
     :return: root of binary tree
     """
     index = 0
     length = len(arr)
-    if length <= 0 or arr[0] == -1:
+    if length == 0 or arr[0] == -1:
         return None
 
     root = Node(arr[index])
     index += 1
     queue = deque()
-    queue.appendleft(root)  # verify
+    queue.appendleft(root)
 
     while queue:
-        current_node = queue.pop()  # verify
+        current_node = queue.pop()
+
         left_child = arr[index]
         index += 1
-
         if left_child is not None:
             left_node = Node(left_child)
             current_node.left = left_node
@@ -346,16 +263,19 @@ def convert_arr_to_binary_tree(arr):
 
         right_child = arr[index]
         index += 1
-
         if right_child is not None:
             right_node = Node(right_child)
             current_node.right = right_node
             queue.appendleft(right_node)
+
     return root
 
 
-
 '''
+# Easiest to create & use function (above) for tree set-up, but can manually set up tree using node methods
+# And check using its properties:
+
+# Manual Tree 1- Create nodes, set left & right child, pass root into Tree instance.
 node1 = Node('apple')
 node2 = Node('banana')
 node3 = Node('orange')
@@ -368,27 +288,32 @@ right: {node1.right.value}
 """)
 print(f"""Node 1 Has left node: {node1.has_left_child()}""")
 print(f"""Node 2 has left node: {node2.has_left_child()}""")
-print(node1) # now shows value inside node
+print(node1)
+tree1 = Tree(node1)
+left_c = tree1.get_root().left
+print(tree1)
+
+# Manual Tree 2- create tree first, and tediously set next nodes.
+binary_tree = Tree('apple')
+binary_tree.get_root().set_left_child(Node('banana'))
+binary_tree.get_root().set_right_child(Node('cherry'))
+binary_tree.get_root().get_left_child().set_left_child(Node('dates'))
+binary_tree.get_root().get_left_child().set_right_child(Node('grapes'))
+binary_tree.get_root().get_left_child().get_right_child().set_left_child(Node('pear'))
+binary_tree.get_root().get_left_child().get_right_child().set_right_child(Node('orange'))
+print(binary_tree)
 '''
 
-#binary_tree = Tree('apple')
-#binary_tree.get_root().set_left_child(Node('banana'))
-#binary_tree.get_root().set_right_child(Node('cherry'))
-#binary_tree.get_root().get_left_child().set_left_child(Node('dates'))
-#binary_tree.get_root().get_left_child().set_right_child(Node('grapes'))
-#binary_tree.get_root().get_left_child().get_right_child().set_left_child(Node('pear'))
-#binary_tree.get_root().get_left_child().get_right_child().set_right_child(Node('orange'))
-
-# print(binary_tree)
-
-# r = convert_arr_to_binary_tree([8, 3, 10, 1, 6, None, 13, None, None, 4, 7, None, None, None, None, None, None])
-# binary_search_tree = BinarySearchTree(r)
-
-# binary_search_tree.insert_with_recursion(5)
-# print(binary_search_tree)
-# binary_search_tree.delete_node_recursion(3)
-# print(binary_search_tree)
-# print(binary_search_tree.search(6))
+# Function Tree 3- use function that converts array to binary tree & instantiate with root (better to make this a method)
+r = convert_arr_to_binary_tree([8, 3, 10, 1, 6, None, 13, None, None, 4, 7, None, None, None, None, None, None])
+binary_search_tree = BinarySearchTree(r)
+binary_search_tree.insert_with_recursion(5)
+print(binary_search_tree)
+'''
+binary_search_tree.delete_node_recursion(3)
+print(binary_search_tree)
+print(binary_search_tree.search(6))
+'''
 
 
 # ============= Pre-Order Traversal Stack without State Object ============
@@ -491,6 +416,9 @@ def pre_order_traversal(tree, target):
             stack.pop()
 
         visit_order.append(tree_node)
+
+
+print(pre_order_traversal(binary_search_tree, 7))
 
 
 # ============== Pre-Order Traversal w/ State Obj ===========
@@ -871,9 +799,8 @@ class MinHeap:
 class NodeRB(Node):
 
     def __init__(self, value, parent, color):
+        super().__init__(value)
         self.value = value
-        self.left = None
-        self.right = None
         self.parent = parent
         self.color = color
 
@@ -1028,6 +955,7 @@ class RedBlackTree(BinarySearchTree):
                 p.left = node_moving_up
             else:
                 p.right = node_moving_up
+
         else:
             self.root = node_moving_up
         node_moving_up.parent = p
@@ -1057,7 +985,6 @@ rb_tree.insert(5)
 # rb_tree.insert(4)
 #rb_tree.insert(6)
 print(rb_tree)
-'''
 tree = RedBlackTree(9)
 tree.insert(6)
 tree.insert(19)
@@ -1066,3 +993,4 @@ tree.insert(13)
 print_tree(tree.root)
 tree.insert(16)
 print_tree(tree.root)
+'''

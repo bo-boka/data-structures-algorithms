@@ -222,8 +222,6 @@ def iscircular(linked_list):
             return True
         node = node.next
         fast = fast.next.next
-        if node.value == -4:  # not sure why these two lines are here
-            return
     return False
 
 # ========= Algos ==========
@@ -318,7 +316,7 @@ class NestedLinkedList(LinkedList):
     def flatten_recursive(self):
         return self._flatten(self.head)  # <-- self.head is a node for NestedLinkedList
 
-    def _flatten_recursive(self, node):
+    def _flatten(self, node):
         # A termination condition
         if node.next is None:
             return merge(node.value, None)  # <-- First argument is a simple LinkedList
@@ -347,11 +345,7 @@ def even_after_odd(head):
     """
     desc - put even nodes after odd nods without creating new nodes or using any data structures
     param - head - head of linked list
-    return - updated list with all even elements are odd elements
-    """
-    """
-    parameter: - head of the given linked list
-    return: - head of the updated list with all even elements placed after odd elements
+    return - head of the updated list with all even elements placed after odd elements
     """
     # --------------------------------------------------#
     '''
@@ -390,8 +384,6 @@ def even_after_odd(head):
         next_node = current.next  # <-- "next_node" represents the next Node w.r.t. the current Node
 
         if current.data % 2 == 0:  # <-- current Node is even
-
-            # Below
             if even_head is None:  # <-- Make the current Node as the starting Node of EVEN sub-list
                 even_head = current  # `even_head` will now point where `current` is already pointing
                 even_tail = even_head

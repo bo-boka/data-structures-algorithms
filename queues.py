@@ -8,7 +8,7 @@ class QueueList:
     def __init__(self, initial_size=10):
         self.arr = [0 for _ in range(initial_size)]
         self.next_index = 0
-        self.front_index = -1
+        self.front_index = -1  # since the front won't always be at 0, use -1 to denote no elements, whereas 0 would imply an item exists
         self.queue_size = 0
 
     def enqueue(self, value):
@@ -16,7 +16,7 @@ class QueueList:
             self._handle_queue_capacity_full()
 
         self.arr[self.next_index] = value
-        self.next_index = (self.next_index + 1) % len(self.arr)
+        self.next_index = (self.next_index + 1) % len(self.arr)  # wrap around array
         self.queue_size += 1
         if self.front_index == -1:
             self.front_index = 0
@@ -28,7 +28,7 @@ class QueueList:
             return None
 
         value = self.arr[self.front_index]
-        self.front_index = (self.next_index + 1) % len(self.arr)
+        self.front_index = (self.front_index + 1) % len(self.arr)  # wrap around array
         self.queue_size += 1
         return value
 
@@ -49,10 +49,11 @@ class QueueList:
 
         index = 0
 
+        # populate from wherever front index  is
         for i in range(self.front_index, len(old_arr)):
             self.arr[index] = old_arr[i]
             index += 1
-
+        # populate from start of array to front index
         for i in range(0, self.front_index):
             self.arr[index] = old_arr[i]
             index += 1
@@ -156,7 +157,7 @@ class QueuePy:
 
 def reverse_queue(queue):
     """
-    Reverese the input queue
+    Reverse the input queue
 
     Args:
        queue(queue),str2(string): Queue to be reversed

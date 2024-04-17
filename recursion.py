@@ -110,6 +110,7 @@ def permute_list(inputList):
             outer_list.append(b_list)
     return outer_list
 
+
 def permute_string(string):
     """
     :param: input string
@@ -123,15 +124,14 @@ def permute_string(string):
 
     first_l = string[0]
     rest = string[1:]
-    print(rest)
     temp_list = permute_string(rest)
 
     for a_str in temp_list:
         for x in range(0, len(a_str)+1):
             b_str = a_str[:x] + first_l + a_str[x:]
-            print(b_str)
             main_list.append(b_str)
     return main_list
+
 
 #string permutations from telephone pad combinations (2 following functions)
 def get_characters(num):
@@ -154,7 +154,6 @@ def get_characters(num):
     else:
         return ""
 
-
 def keypad(num):
     """
     gets all string permutations from keypad number combinations. keypad order matters
@@ -176,6 +175,7 @@ def keypad(num):
             item = t + c
             output.append(item)
     return output
+
 
 def deep_reverse_my_solution(arr):
     """
@@ -201,6 +201,7 @@ def deep_reverse_my_solution(arr):
 
     temp_arr.insert(0, last_val)
     return temp_arr
+
 
 def deep_reverse_class_solution(arr):
 
@@ -228,6 +229,7 @@ def print_integers(n):
         return
     print(n)
     print_integers(n-1)
+
 
 def tower_of_Hanoi_soln(num_disks, source, auxiliary, destination):
     """
@@ -453,4 +455,4 @@ def floor_tiles(arr):
 # my_arr = [1,2,0,1,0,0]
 # my_arr = [5,0,0,0]
 # my_arr = [2,0,5,0,0,0]
-print('floor tiles:', floor_tiles(my_arr))
+# print('floor tiles:', floor_tiles(my_arr))

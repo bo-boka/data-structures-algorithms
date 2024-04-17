@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f74832f5-79cd-4ffd-afaf-50ff7980f6cd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/linked_lists.py" beforeDir="false" afterPath="$PROJECT_DIR$/linked_lists.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/queues.py" beforeDir="false" afterPath="$PROJECT_DIR$/queues.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/recursion.py" beforeDir="false" afterPath="$PROJECT_DIR$/recursion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stacks.py" beforeDir="false" afterPath="$PROJECT_DIR$/stacks.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trees.py" beforeDir="false" afterPath="$PROJECT_DIR$/trees.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2Ovfe8F87DZS5kX8tRjWFLVZ3gj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager" selected="Python.trees">
+    <configuration name="recursion" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="data-structures-algorithms" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.conda/envs/Udacity/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/recursion.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="scratch_1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="data-structures-algorithms" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.conda/envs/Udacity/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="trees" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="data-structures-algorithms" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.conda/envs/Udacity/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/trees.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.trees" />
+        <item itemvalue="Python.recursion" />
+        <item itemvalue="Python.scratch_1" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f74832f5-79cd-4ffd-afaf-50ff7980f6cd" name="Default Changelist" comment="" />
+      <created>1682446068323</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682446068323</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2122" y="550" width="666" height="819" key="#recursion" timestamp="1682553531183">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state x="2122" y="550" width="666" height="819" key="#recursion/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1682553531183" />
+    <state x="2122" y="550" width="666" height="819" key="#scratch_1" timestamp="1682455851649">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state x="2122" y="550" width="666" height="819" key="#scratch_1/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1682455851649" />
+    <state x="2089" y="673" width="666" height="795" key="#trees" timestamp="1682971158833">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state x="2089" y="673" width="666" height="795" key="#trees/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682971158833" />
+    <state width="1034" height="690" key="GridCell.Tab.0.bottom" timestamp="1683572818065">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="564" key="GridCell.Tab.0.bottom/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682993530591" />
+    <state width="1034" height="690" key="GridCell.Tab.0.bottom/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818065" />
+    <state width="1034" height="690" key="GridCell.Tab.0.center" timestamp="1683572818065">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="564" key="GridCell.Tab.0.center/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682993530591" />
+    <state width="1034" height="690" key="GridCell.Tab.0.center/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818065" />
+    <state width="1034" height="690" key="GridCell.Tab.0.left" timestamp="1683572818064">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="564" key="GridCell.Tab.0.left/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682993530591" />
+    <state width="1034" height="690" key="GridCell.Tab.0.left/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818064" />
+    <state width="1034" height="690" key="GridCell.Tab.0.right" timestamp="1683572818065">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="564" key="GridCell.Tab.0.right/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682993530591" />
+    <state width="1034" height="690" key="GridCell.Tab.0.right/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818065" />
+    <state width="1034" height="690" key="GridCell.Tab.1.bottom" timestamp="1683572818065">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="690" key="GridCell.Tab.1.bottom/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682988381767" />
+    <state width="1034" height="690" key="GridCell.Tab.1.bottom/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818065" />
+    <state width="1034" height="690" key="GridCell.Tab.1.center" timestamp="1683572818065">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="690" key="GridCell.Tab.1.center/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682988381767" />
+    <state width="1034" height="690" key="GridCell.Tab.1.center/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818065" />
+    <state width="1034" height="690" key="GridCell.Tab.1.left" timestamp="1683572818065">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="690" key="GridCell.Tab.1.left/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682988381767" />
+    <state width="1034" height="690" key="GridCell.Tab.1.left/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818065" />
+    <state width="1034" height="690" key="GridCell.Tab.1.right" timestamp="1683572818065">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state width="1034" height="690" key="GridCell.Tab.1.right/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@0.631.1920.795" timestamp="1682988381767" />
+    <state width="1034" height="690" key="GridCell.Tab.1.right/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1683572818065" />
+    <state x="2123" y="449" width="672" height="678" key="search.everywhere.popup" timestamp="1682455628483">
+      <screen x="1920" y="0" width="1080" height="1920" />
+    </state>
+    <state x="2123" y="449" width="672" height="678" key="search.everywhere.popup/3000.600.1920.1080/0.631.1920.795/1920.0.1080.1920@1920.0.1080.1920" timestamp="1682455628483" />
+  </component>
+</project>

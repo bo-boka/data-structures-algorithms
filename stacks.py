@@ -205,7 +205,7 @@ def reverse_stack(stack):
     _reverse_stack_recursion(stack, holder_stack)
 
 
-# used in the function above?
+# used in the function above
 def _reverse_stack_recursion(stack, holder_stack):
     if holder_stack.is_empty():
         return
@@ -221,7 +221,7 @@ def minimum_bracket_reversals(input_string):
     Args:
        input_string(string): Strings to be used for bracket reversal calculation
     Returns:
-       int: Number of breacket reversals needed
+       int: Number of bracket reversals needed
     """
 
     # count { and count }
